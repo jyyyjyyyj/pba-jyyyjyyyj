@@ -136,6 +136,16 @@ void collision_detection(
       // write some codes here (probably 5 - 10 lines)
       // use the function "is_collide()" at line #102
       // ----------------------------------------------
+	  for (std::set<unsigned int>::iterator it = stack.begin(); it != stack.end(); ++it)
+	  {
+		  if (aCircle[ic0].is_collided && aCircle[*it].is_collided)
+			  continue; //they may already collide with other circles
+		  if (is_collide(aCircle[ic0], aCircle[*it], rad)) //if pi collide with those circiles
+		  {
+			  aCircle[ic0].is_collided = true;
+			  aCircle[*it].is_collided = true;
+		  }
+	  }
       stack.insert(ic0);
     }
     else{ // exit the range of the circle
