@@ -52,15 +52,17 @@ DFM2_INLINE void WdWddW_Spring2(
   double ddC[nnode][nnode][ndim][ndim]; // hessian of C
   std::fill_n(&ddC[0][0][0][0], nnode*nnode*ndim*ndim, 0.0); // currently ddC is zet to zero.
   for(unsigned int idim=0;idim<ndim;++idim){
-    for(unsigned int jdim=0;jdim<ndim;++jdim) {
-      // write some code below to compute the ddC.
-      // ddC[ino][jno][ino][jno] means differentiation of C w.r.t. p[ino][idim] and then p[jno][jdim]
-
-//      ddC[0][0][idim][jdim] =
-//      ddC[0][1][idim][jdim] =
-//      ddC[1][0][idim][jdim] =
-//      ddC[1][1][idim][jdim] =
-    }
+	  for (unsigned int jdim = 0; jdim < ndim; ++jdim) {
+		  // write some code below to compute the ddC.
+		  // ddC[ino][jno][ino][jno] means differentiation of C w.r.t. p[ino][idim] and then p[jno][jdim]
+		  //let dc = f1/f2, f2 = len, 
+		  //then ddc = (f1'*f2)-(f2'*f1)/f2^2 = (f1'-dc1*dc2)/len, where f1' = 0, -1 or 1
+		  double temp = (idim == jdim ? 1.0 : 0.0);
+		  ddC[0][0][idim][jdim] = (temp - dC[0][idim] * dC[0][jdim]) / len;
+		  ddC[0][1][idim][jdim] = -((temp + dC[0][idim] * dC[1][jdim])) / len;
+		  ddC[1][0][idim][jdim] = -((temp + dC[1][idim] * dC[0][jdim])) / len;
+		  ddC[1][1][idim][jdim] = (temp - dC[1][idim] * dC[1][jdim]) / len;
+	  }
   }
   //
   W = 0.5 * stiffness * C * C; // Hooke's law. energy is square of length difference W=1/2*k*C*C

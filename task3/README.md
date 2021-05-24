@@ -33,7 +33,7 @@ Build the program using `cmake`. Run the program and take a screenshot image of 
 
 === paste screenshot here ===
 
-
+![task3_pre](task3_pre.png)
 
 
 
@@ -50,7 +50,7 @@ Fill the code around line #56 to compute the correct hessian of the energy (abou
 Paste the screenshot image of converged deformation below:
 
 == paste screenshot image here==
-
+![task3_result](task3_result.png)
 
 
 
