@@ -32,7 +32,7 @@ Build the `main.cpp` using `cmake`. Run the program and take a screenshot image 
 
 === paste screenshot here ===
 
-
+![task7_pre](task7_pre.png)
 
 
 ## Problem 2
@@ -59,7 +59,7 @@ Paste the resulting screenshot image below:
 
 === paste screenshot image here ===
 
-  
+ ![task7_result](task7_result.png) 
 
 
 

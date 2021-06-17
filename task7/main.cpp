@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
-
+using namespace std;
 #ifndef M_PI
   #define M_PI 3.14159265359
 #endif
@@ -59,18 +59,21 @@ void InitializeProblem(
  * @param[in] R rotation
  */
 void WdWddW_Rotation(
-    double& W,
-    Eigen::Vector3d& dW,
-    Eigen::Matrix3d& ddW,
-    const Eigen::Vector3d& p,
-    const Eigen::Vector3d& q,
-    const Eigen::Matrix3d& R)
+	double& W,
+	Eigen::Vector3d& dW,
+	Eigen::Matrix3d& ddW,
+	const Eigen::Vector3d& p,
+	const Eigen::Vector3d& q,
+	const Eigen::Matrix3d& R)
 {
-  const Eigen::Vector3d Rp = R*p;
-  W = (Rp-q).squaredNorm();
-  // compute gradient and hessian of the energy below.
-  // dW =
-  // ddW =
+	const Eigen::Vector3d Rp = R * p;
+	W = (Rp - q).squaredNorm();
+	// compute gradient and hessian of the energy below.
+	const Eigen::Vector3d delta = Rp - q;
+	dW = {2*delta(1)*p(2)-2*delta(2)*p(1),-2*delta(0)*p(2)+2*delta(2)*p(0),2*delta(0)*p(1)-2*delta(1)*p(0)};
+	ddW << 2 * (p(2)*p(2) + p(1)*p(1)),-2 * p(0)*p(1),-2 * p(0)*p(2),
+		   -2 * p(0)*p(1),2 * (p(2)*p(2) + p(0)*p(0)), -2 * p(1)*p(2),
+		   -2 * p(0)*p(2),-2 * p(1)*p(2),2 * (p(0)*p(0) + p(1)*p(1));
 }
 
 /**
