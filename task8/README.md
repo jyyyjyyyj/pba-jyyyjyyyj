@@ -32,7 +32,7 @@ Build the program using `cmake`. Run the program and take a screenshot image of 
 
 === paste screenshot here ===
 
-
+![task8_pre](task8_pre.png)
 
 
 
@@ -52,7 +52,7 @@ Paste the screenshot image of the animation below:
 
 == paste screenshot image here==
 
-
+![task8_result](task8_result.png)
 
 
 

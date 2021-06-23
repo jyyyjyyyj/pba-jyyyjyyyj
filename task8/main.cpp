@@ -146,10 +146,13 @@ void AnimationByEnergyMinimization(
   for(unsigned int ip=0;ip<np;++ip) {
     gradW(ip*2+0) -= mass_point*gravity[0];
     gradW(ip*2+1) -= mass_point*gravity[1];
+	//inertia:
+	gradW(ip * 2 + 0) += 2 * mass_point * (aXY[ip * 2 + 0] - aXYt[ip * 2 + 0]) / (dt*dt);
+	gradW(ip * 2 + 1) += 2 * mass_point * (aXY[ip * 2 + 1] - aXYt[ip * 2 + 1]) / (dt*dt);
   }
   // add the inertia effect below
   for(unsigned int i=0;i<nDof;++i){
-  // hessW(i,i) +=
+	  hessW(i, i) += 2 * mass_point / (dt*dt);
   }
   // adding boundary condition
   for(unsigned int i=0;i<nDof;++i){
@@ -164,7 +167,7 @@ void AnimationByEnergyMinimization(
   Eigen::VectorXd update = lu.solve(gradW); // solve matrix
   // modify velocity and position update below.
   for(unsigned int i=0;i<nDof;++i){
-//    aUV[i] =
+	aUV[i] = -update(i) / dt;
     aXY[i] = aXY[i]-update(i);
   }
 
