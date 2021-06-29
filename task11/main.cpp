@@ -49,6 +49,7 @@ void InertiaTensor(
 {
   // zero clear Imat
   Imat = 1.0e-5*Eigen::Matrix3d::Identity(); // zero clear the tensor
+  std::vector<double> temp(6, 0);
   for(unsigned int it=0;it<aTri.size()/3;++it){
     const Eigen::Vector3d ap[3] = { // coordinates of triangle corner points
         Eigen::Map<Eigen::Vector3d>(aXYZ.data()+aTri[it*3+0]*3),
@@ -57,6 +58,17 @@ void InertiaTensor(
     };
     const double area = (ap[1]-ap[0]).cross(ap[2]-ap[0]).norm()/2; // area of triangle
     // write some code below to compute inertia tensor
+	Imat(0, 0) += area / 3;
+	Imat(1, 1) += area / 3;
+	Imat(2, 2) += area / 3;
+
+	Imat(0, 1) -= area / 12;
+	Imat(0, 2) -= area / 12;
+	Imat(1, 2) -= area / 12;
+
+	Imat(1, 0) -= area / 12;
+	Imat(2, 0) -= area / 12;
+	Imat(2, 1) -= area / 12;
   }
 }
 

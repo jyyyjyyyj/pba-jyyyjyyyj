@@ -41,6 +41,7 @@ Run the program and take a screenshot image of the window. Paste the screenshot 
 
 === paste screenshot here ===
 
+![pre](task11_pre.png)
 
 ## Problem 2
 
@@ -54,16 +55,16 @@ The inertia tensor should computed for the **rotation around the origin of the c
 The line in red, blue and green are the principal axes of the inertia tensor.
 
 Write down the eigenvalues of the inertia tensor below (they will be shown in the standard output):
-- 1st eigenvalue: 
-- 2nd eigenvalue: 
-- 3rd eigenvalue: 
+- 1st eigenvalue: 10055
+- 2nd eigenvalue: 25137.6
+- 3rd eigenvalue: 25137.6
 
-
+  
 Paste the screenshot image below:
 
 === paste screenshot here ===
 
-
+![result](task11_result.png)
 
 The following slides may be useful:
 
