@@ -49,7 +49,6 @@ void InertiaTensor(
 {
   // zero clear Imat
   Imat = 1.0e-5*Eigen::Matrix3d::Identity(); // zero clear the tensor
-  std::vector<double> temp(6, 0);
   for(unsigned int it=0;it<aTri.size()/3;++it){
     const Eigen::Vector3d ap[3] = { // coordinates of triangle corner points
         Eigen::Map<Eigen::Vector3d>(aXYZ.data()+aTri[it*3+0]*3),
