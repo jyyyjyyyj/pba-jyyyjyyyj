@@ -5,7 +5,9 @@
 #include <cstdlib>
 #include <cstdio>
 #include <Eigen/Core>
+#include <Eigen/LU>
 #include <Eigen/SVD>
+
 //#include <Eigen/LU>
 
 /**
@@ -122,8 +124,36 @@ int main()
             aMass[aQuad[iq*4+3]] };
         // write some code below to rigidly transform the points in the rest shape (`aq`) such that the
         // weighted sum of squared distances against the points in the tentative shape (`qp`) is minimized (`am` is the weight).
+		
+		Eigen::Vector2f t = Eigen::Vector2f::Zero(2); //center of mass for axyt
+		Eigen::Vector2f t0 = Eigen::Vector2f::Zero(2); //center of mass for axy0
+		float M = am[0]+ am[1]+ am[2]+ am[3];//sum of mass
 
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			//center of mass
+			t(0) += am[i] * ap[i][0] / M;
+			t(1) += am[i] * ap[i][1] / M;
+			t0(0) += am[i] * aq[i][0] / M;
+			t0(1) += am[i] * aq[i][1] / M;
+		}
+		Eigen::Matrix2f BA = Eigen::Matrix2f::Zero(2, 2);
+		for (unsigned int i = 0; i < 4; i++)
+		{
+			BA += am[i] * (ap[i] - t)*((aq[i] - t0).transpose());
+		}
 
+		Eigen::JacobiSVD<Eigen::MatrixXf> svd(BA, Eigen::ComputeThinU | Eigen::ComputeThinV);
+		Eigen::Matrix2f U = svd.matrixU();
+		Eigen::Matrix2f V = svd.matrixV();
+		Eigen::Matrix2f R = U * V.transpose(); //Rotation matrix
+		//update axyt
+		for (int i = 0; i < 4; i++)
+		{
+			Eigen::Vector2f x0 = R*(aq[i] - t0); //after rotation
+			aXYt[aQuad[iq * 4 + i] * 2] = t(0) + x0(0);
+			aXYt[aQuad[iq * 4 + i] * 2 + 1] = t(1) + x0(1);
+		}
         // no edits further down
       }
       for(unsigned int ixy=0;ixy<aXY.size()/2;++ixy) { // update position and velocities
