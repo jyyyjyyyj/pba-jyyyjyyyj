@@ -1,4 +1,4 @@
-# Physics-based Animation 4860-1081 
+# Note: This repository saves the relevant contents of the course *Physics-based Animation* that I took in the spring semester of 2021.
 
 
 | Linux | Windows |
